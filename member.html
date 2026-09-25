@@ -1,0 +1,567 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>La Colonne | Members Club</title>
+
+  <!-- 폰트 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --bg-dark: #0a0b0d;
+      --bg-card: #13151b;
+      --gold-primary: #dfcfb2;
+      --gold-accent: #c9a96e;
+      --text-muted: #9aa0b0;
+      --text-main: #f3f4f6;
+      --border-subtle: rgba(201, 169, 110, 0.25);
+      --font-serif: "Cormorant Garamond", Georgia, serif;
+      --font-sans: "Pretendard", -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: var(--font-sans);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* 상단 헤더 */
+    header {
+      padding: 24px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      background: rgba(10, 11, 13, 0.85);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .header-inner {
+      width: 90%;
+      max-width: 600px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .brand-logo {
+      font-family: var(--font-serif);
+      font-size: 1.6rem;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      letter-spacing: 5px;
+      text-decoration: none;
+      font-weight: 500;
+    }
+    .back-home {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      text-decoration: none;
+      letter-spacing: 1px;
+      transition: color 0.2s ease;
+    }
+    .back-home:hover { color: var(--gold-primary); }
+
+    /* 메인 컨테이너 */
+    .main-wrap {
+      width: 90%;
+      max-width: 520px;
+      margin: 40px auto 60px auto;
+      flex: 1;
+    }
+
+    /* ─── 1. 간편 로그인 카드 ─── */
+    #login-section {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 20px;
+      padding: 38px 30px;
+      text-align: center;
+      box-shadow: 0 16px 45px rgba(0, 0, 0, 0.6);
+    }
+    .login-tag {
+      font-family: var(--font-serif);
+      font-size: 0.95rem;
+      color: var(--gold-accent);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+      display: block;
+    }
+    .login-title {
+      font-family: var(--font-serif);
+      font-size: 2.2rem;
+      font-weight: 400;
+      color: var(--text-main);
+      letter-spacing: 2px;
+      margin-bottom: 12px;
+    }
+    .login-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      line-height: 1.6;
+      margin-bottom: 30px;
+      word-break: keep-all;
+    }
+
+    .form-group {
+      text-align: left;
+      margin-bottom: 18px;
+    }
+    label {
+      display: block;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+      letter-spacing: 0.5px;
+    }
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      background: #1c1e26;
+      border: 1px solid #303442;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+      transition: border-color 0.2s ease;
+    }
+    input:focus { border-color: var(--gold-accent); }
+
+    .btn-login {
+      width: 100%;
+      padding: 15px;
+      background: var(--gold-accent);
+      color: var(--bg-dark);
+      border: none;
+      border-radius: 10px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: all 0.25s ease;
+    }
+    .btn-login:hover {
+      background: #dfcfb2;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(201, 169, 110, 0.35);
+    }
+    .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+
+    #login-error {
+      margin-top: 14px;
+      color: #f87171;
+      font-size: 0.85rem;
+      display: none;
+    }
+
+    /* ─── 2. 멤버십 대시보드 (로그인 후 표출) ─── */
+    #dashboard-section {
+      display: none;
+      animation: fadeIn 0.4s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* 블랙 메탈 VIP 멤버십 카드 */
+    .vip-card {
+      position: relative;
+      width: 100%;
+      height: 250px;
+      background: linear-gradient(135deg, #1b1d24 0%, #111217 60%, #1c1815 100%);
+      border: 1px solid rgba(201, 169, 110, 0.45);
+      border-radius: 18px;
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.85);
+      margin-bottom: 28px;
+      overflow: hidden;
+    }
+    .vip-card::after {
+      content: "";
+      position: absolute;
+      top: -60px;
+      right: -60px;
+      width: 160px;
+      height: 160px;
+      background: radial-gradient(circle, rgba(201, 169, 110, 0.15) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .card-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+    .card-brand {
+      font-family: var(--font-serif);
+      font-size: 1.5rem;
+      letter-spacing: 6px;
+      color: var(--gold-primary);
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .card-tier {
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
+      letter-spacing: 2px;
+      color: var(--gold-accent);
+      text-transform: uppercase;
+      border: 1px solid rgba(201, 169, 110, 0.35);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+    .card-member-name {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: #ffffff;
+      letter-spacing: -0.5px;
+    }
+    .card-code {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      letter-spacing: 2px;
+      margin-top: 2px;
+    }
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      padding-top: 14px;
+    }
+    .card-meta-label {
+      font-size: 0.68rem;
+      color: #717786;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .card-meta-val {
+      font-size: 0.85rem;
+      color: var(--gold-primary);
+      font-weight: 500;
+      letter-spacing: 0.5px;
+    }
+
+    /* 잔여 시간 & 통계 카드 */
+    .stats-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-subtle);
+      border-radius: 18px;
+      padding: 26px;
+      margin-bottom: 22px;
+    }
+    .stats-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      margin-bottom: 12px;
+    }
+    .stats-title {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+    }
+    .stats-time {
+      font-size: 2.3rem;
+      font-weight: 700;
+      color: var(--gold-primary);
+      letter-spacing: -1px;
+    }
+    .stats-time small {
+      font-size: 1.05rem;
+      font-weight: 400;
+      color: var(--text-muted);
+      margin-left: 2px;
+    }
+
+    /* 프로그레스 바 */
+    .progress-track {
+      width: 100%;
+      height: 10px;
+      background: #20222a;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-bottom: 10px;
+    }
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, #c9a96e 0%, #dfcfb2 100%);
+      border-radius: 10px;
+      transition: width 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .progress-meta {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+      color: #717786;
+    }
+
+    /* 예약/컨시어지 바로가기 버튼 */
+    .action-group {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 24px;
+    }
+    .btn-reserve {
+      width: 100%;
+      padding: 16px;
+      background: var(--gold-accent);
+      color: var(--bg-dark);
+      border: none;
+      border-radius: 12px;
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+    .btn-reserve:hover {
+      background: #dfcfb2;
+      box-shadow: 0 4px 20px rgba(201, 169, 110, 0.35);
+      transform: translateY(-2px);
+    }
+    .btn-logout {
+      width: 100%;
+      padding: 12px;
+      background: transparent;
+      border: 1px solid #323542;
+      color: var(--text-muted);
+      border-radius: 12px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+    .btn-logout:hover { border-color: #555; color: #fff; }
+
+    /* 푸터 */
+    footer {
+      padding: 24px 0;
+      text-align: center;
+      font-size: 0.78rem;
+      color: #515664;
+      letter-spacing: 1px;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 헤더 -->
+  <header>
+    <div class="header-inner">
+      <a href="index.html" class="brand-logo">La Colonne</a>
+      <a href="index.html" class="back-home">← Back to Sanctuary</a>
+    </div>
+  </header>
+
+  <!-- 메인 영역 -->
+  <div class="main-wrap">
+
+    <!-- 1. 간편 로그인 폼 -->
+    <div id="login-section">
+      <span class="login-tag">Members Club</span>
+      <h1 class="login-title">Private Access</h1>
+      <p class="login-sub">
+        등록하신 연락처와 4자리 전용 PIN 코드를 입력하시면<br>
+        실시간 잔여 시간과 멤버십 혜택을 확인하실 수 있습니다.
+      </p>
+
+      <form id="login-form" onsubmit="handleLogin(event)">
+        <div class="form-group">
+          <label>등록 연락처 (휴대폰 번호)</label>
+          <input type="tel" id="input-phone" placeholder="예: 010-1234-5678" required autocomplete="tel">
+        </div>
+
+        <div class="form-group">
+          <label>4자리 전용 PIN 코드</label>
+          <input type="password" id="input-pin" maxlength="6" placeholder="숫자 입력" required autocomplete="current-password">
+        </div>
+
+        <button type="submit" class="btn-login" id="btn-submit">멤버십 조회하기</button>
+        <div id="login-error">등록된 회원 정보가 일치하지 않습니다.</div>
+      </form>
+    </div>
+
+    <!-- 2. 회원 대시보드 (로그인 성공 시 활성화) -->
+    <div id="dashboard-section">
+      
+      <!-- VIP 블랙 카드 -->
+      <div class="vip-card">
+        <div class="card-top">
+          <div class="card-brand">La Colonne</div>
+          <div class="card-tier" id="card-tier">Black Edition</div>
+        </div>
+        <div>
+          <div class="card-member-name" id="card-name">-</div>
+          <div class="card-code" id="card-code">LC-0000</div>
+        </div>
+        <div class="card-bottom">
+          <div>
+            <div class="card-meta-label">VALID THRU</div>
+            <div class="card-meta-val" id="card-expire">2026.12.31</div>
+          </div>
+          <div>
+            <div class="card-meta-label">STATUS</div>
+            <div class="card-meta-val" style="color: #4ade80;">ACTIVE</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 잔여 시간 현황 카드 -->
+      <div class="stats-card">
+        <div class="stats-header">
+          <span class="stats-title">잔여 대관 크레딧</span>
+          <div class="stats-time">
+            <span id="remain-hours">0</span><small>시간 남음</small>
+          </div>
+        </div>
+
+        <!-- 프로그레스 바 -->
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
+        </div>
+        <div class="progress-meta">
+          <span>사용한 시간: <b id="used-hours" style="color:#dfcfb2;">0</b>시간</span>
+          <span>약정 총 시간: <b id="total-hours" style="color:#dfcfb2;">0</b>시간</span>
+        </div>
+      </div>
+
+      <!-- 버튼 액션 -->
+      <div class="action-group">
+        <!-- 네이버 예약 또는 원장님 직통 예약 링크로 연결 -->
+        <a href="https://pf.kakao.com" target="_blank" class="btn-reserve" id="reserve-link">
+          ✦ 전용 라운지 세션 예약하기
+        </a>
+        <button type="button" class="btn-logout" onclick="handleLogout()">로그아웃 (처음으로)</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 푸터 -->
+  <footer>
+    © 2026 La Colonne. Exclusively Reserved For Members.
+  </footer>
+
+  <script>
+    const SUPABASE_URL = 'https://jorxmazliodqnxnwctlc.supabase.co';
+    const SUPABASE_KEY = 'sb_publishable_GAU-azI_hJvms8k3Nzsyiw_PRH0NG69';
+
+    const cleanUrl = SUPABASE_URL.trim();
+    const cleanKey = SUPABASE_KEY.trim();
+
+    // 전화번호 포맷 정규화 (하이픈 제거하여 일관 대조)
+    function sanitizePhone(str) {
+      return (str || '').replace(/[^0-9]/g, '');
+    }
+
+    // 자동 로그인 체크 (SessionStorage)
+    window.addEventListener('DOMContentLoaded', () => {
+      const savedMember = sessionStorage.getItem('lacolonne_member');
+      if (savedMember) {
+        try {
+          renderDashboard(JSON.parse(savedMember));
+        } catch(e) {
+          sessionStorage.removeItem('lacolonne_member');
+        }
+      }
+    });
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const phoneInput = document.getElementById('input-phone').value.trim();
+      const pinInput = document.getElementById('input-pin').value.trim();
+      const btn = document.getElementById('btn-submit');
+      const errBox = document.getElementById('login-error');
+
+      btn.disabled = true;
+      btn.innerText = '인증 확인 중...';
+      errBox.style.display = 'none';
+
+      const cleanTargetPhone = sanitizePhone(phoneInput);
+
+      try {
+        // Supabase에서 해당 핀코드와 일치하는 회원 목록 조회
+        const res = await fetch(`${cleanUrl}/rest/v1/lounge_members?pin_code=eq.${encodeURIComponent(pinInput)}&select=*`, {
+          headers: {
+            'apikey': cleanKey,
+            'Authorization': 'Bearer ' + cleanKey
+          }
+        });
+
+        if (!res.ok) throw new Error('조회 실패');
+        const members = await res.json();
+
+        // 전화번호 대조 (하이픈 포함/미포함 무관 대조)
+        const matched = members.find(m => sanitizePhone(m.phone) === cleanTargetPhone);
+
+        if (matched) {
+          sessionStorage.setItem('lacolonne_member', JSON.stringify(matched));
+          renderDashboard(matched);
+        } else {
+          errBox.style.display = 'block';
+          errBox.innerText = '등록된 회원 연락처 또는 PIN 코드가 일치하지 않습니다.';
+        }
+      } catch(err) {
+        errBox.style.display = 'block';
+        errBox.innerText = '조회 중 오류가 발생했습니다. 잠시 후 다시 시도해 주세요.';
+      } finally {
+        btn.disabled = false;
+        btn.innerText = '멤버십 조회하기';
+      }
+    }
+
+    function renderDashboard(data) {
+      document.getElementById('login-section').style.display = 'none';
+      document.getElementById('dashboard-section').style.display = 'block';
+
+      // 1. 카드 정보 렌더링
+      document.getElementById('card-tier').innerText = data.tier || 'Black Edition';
+      document.getElementById('card-name').innerText = data.company_name || 'VIP Member';
+      document.getElementById('card-code').innerText = data.member_code || 'LC-VIP';
+      document.getElementById('card-expire').innerText = (data.expire_date || '').replace(/-/g, '.');
+
+      // 2. 시간 통계 및 프로그레스 바 계산
+      const total = Number(data.total_hours) || 0;
+      const used = Number(data.used_hours) || 0;
+      const remain = Math.max(0, total - used);
+
+      document.getElementById('remain-hours').innerText = remain % 1 === 0 ? remain : remain.toFixed(1);
+      document.getElementById('used-hours').innerText = used % 1 === 0 ? used : used.toFixed(1);
+      document.getElementById('total-hours').innerText = total;
+
+      const fillPercent = total > 0 ? Math.min(100, Math.round((remain / total) * 100)) : 0;
+      setTimeout(() => {
+        document.getElementById('progress-bar').style.width = fillPercent + '%';
+      }, 100);
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem('lacolonne_member');
+      document.getElementById('dashboard-section').style.display = 'none';
+      document.getElementById('login-section').style.display = 'block';
+      document.getElementById('input-phone').value = '';
+      document.getElementById('input-pin').value = '';
+      document.getElementById('progress-bar').style.width = '0%';
+    }
+  </script>
+</body>
+</html>
