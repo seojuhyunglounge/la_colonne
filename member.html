@@ -166,7 +166,7 @@
       display: none;
     }
 
-    /* ─── 2. 멤버십 대시보드 (로그인 후 표출) ─── */
+    /* ─── 2. 멤버십 대시보드 ─── */
     #dashboard-section {
       display: none;
       animation: fadeIn 0.4s ease-out;
@@ -258,7 +258,7 @@
       letter-spacing: 0.5px;
     }
 
-    /* 잔여 시간 & 통계 카드 */
+    /* 잔여 횟수 현황 카드 */
     .stats-card {
       background: var(--bg-card);
       border: 1px solid var(--border-subtle);
@@ -270,23 +270,29 @@
       display: flex;
       justify-content: space-between;
       align-items: baseline;
-      margin-bottom: 12px;
+      margin-bottom: 6px;
     }
     .stats-title {
       font-size: 0.95rem;
       color: var(--text-muted);
     }
     .stats-time {
-      font-size: 2.3rem;
+      font-size: 2.5rem;
       font-weight: 700;
       color: var(--gold-primary);
       letter-spacing: -1px;
     }
     .stats-time small {
-      font-size: 1.05rem;
-      font-weight: 400;
+      font-size: 1.15rem;
+      font-weight: 500;
       color: var(--text-muted);
       margin-left: 2px;
+    }
+    .stats-unit-hint {
+      font-size: 0.78rem;
+      color: var(--gold-accent);
+      margin-bottom: 16px;
+      letter-spacing: 0.5px;
     }
 
     /* 프로그레스 바 */
@@ -296,7 +302,7 @@
       background: #20222a;
       border-radius: 10px;
       overflow: hidden;
-      margin-bottom: 10px;
+      margin-bottom: 12px;
     }
     .progress-fill {
       height: 100%;
@@ -307,11 +313,11 @@
     .progress-meta {
       display: flex;
       justify-content: space-between;
-      font-size: 0.78rem;
-      color: #717786;
+      font-size: 0.82rem;
+      color: #8b91a0;
     }
 
-    /* 예약/컨시어지 바로가기 버튼 */
+    /* 버튼 액션 */
     .action-group {
       display: flex;
       flex-direction: column;
@@ -380,7 +386,7 @@
       <h1 class="login-title">Private Access</h1>
       <p class="login-sub">
         등록하신 연락처와 4자리 전용 PIN 코드를 입력하시면<br>
-        실시간 잔여 시간과 멤버십 혜택을 확인하실 수 있습니다.
+        실시간 잔여 세션 횟수와 멤버십 상태를 확인하실 수 있습니다.
       </p>
 
       <form id="login-form" onsubmit="handleLogin(event)">
@@ -399,7 +405,7 @@
       </form>
     </div>
 
-    <!-- 2. 회원 대시보드 (로그인 성공 시 활성화) -->
+    <!-- 2. 회원 대시보드 -->
     <div id="dashboard-section">
       
       <!-- VIP 블랙 카드 -->
@@ -424,28 +430,29 @@
         </div>
       </div>
 
-      <!-- 잔여 시간 현황 카드 -->
+      <!-- 잔여 횟수 현황 카드 -->
       <div class="stats-card">
         <div class="stats-header">
-          <span class="stats-title">잔여 대관 크레딧</span>
+          <span class="stats-title">잔여 멤버십 세션</span>
           <div class="stats-time">
-            <span id="remain-hours">0</span><small>시간 남음</small>
+            <span id="remain-passes">0</span><small>회 남음</small>
           </div>
         </div>
+        <div class="stats-unit-hint">✦ 기본 1회 = 3시간 프라이빗 단독 대관</div>
 
         <!-- 프로그레스 바 -->
         <div class="progress-track">
           <div class="progress-fill" id="progress-bar" style="width: 0%;"></div>
         </div>
         <div class="progress-meta">
-          <span>사용한 시간: <b id="used-hours" style="color:#dfcfb2;">0</b>시간</span>
-          <span>약정 총 시간: <b id="total-hours" style="color:#dfcfb2;">0</b>시간</span>
+          <span>이용한 세션: <b id="used-passes" style="color:#dfcfb2;">0</b>회</span>
+          <span>약정 총 세션: <b id="total-passes" style="color:#dfcfb2;">0</b>회</span>
         </div>
       </div>
 
       <!-- 버튼 액션 -->
       <div class="action-group">
-        <!-- 네이버 예약 또는 원장님 직통 예약 링크로 연결 -->
+        <!-- 예약 채널(전화/카카오톡 채널 등) 연결 -->
         <a href="https://pf.kakao.com" target="_blank" class="btn-reserve" id="reserve-link">
           ✦ 전용 라운지 세션 예약하기
         </a>
@@ -468,12 +475,10 @@
     const cleanUrl = SUPABASE_URL.trim();
     const cleanKey = SUPABASE_KEY.trim();
 
-    // 전화번호 포맷 정규화 (하이픈 제거하여 일관 대조)
     function sanitizePhone(str) {
       return (str || '').replace(/[^0-9]/g, '');
     }
 
-    // 자동 로그인 체크 (SessionStorage)
     window.addEventListener('DOMContentLoaded', () => {
       const savedMember = sessionStorage.getItem('lacolonne_member');
       if (savedMember) {
@@ -499,7 +504,6 @@
       const cleanTargetPhone = sanitizePhone(phoneInput);
 
       try {
-        // Supabase에서 해당 핀코드와 일치하는 회원 목록 조회
         const res = await fetch(`${cleanUrl}/rest/v1/lounge_members?pin_code=eq.${encodeURIComponent(pinInput)}&select=*`, {
           headers: {
             'apikey': cleanKey,
@@ -509,8 +513,6 @@
 
         if (!res.ok) throw new Error('조회 실패');
         const members = await res.json();
-
-        // 전화번호 대조 (하이픈 포함/미포함 무관 대조)
         const matched = members.find(m => sanitizePhone(m.phone) === cleanTargetPhone);
 
         if (matched) {
@@ -533,20 +535,19 @@
       document.getElementById('login-section').style.display = 'none';
       document.getElementById('dashboard-section').style.display = 'block';
 
-      // 1. 카드 정보 렌더링
       document.getElementById('card-tier').innerText = data.tier || 'Black Edition';
       document.getElementById('card-name').innerText = data.company_name || 'VIP Member';
       document.getElementById('card-code').innerText = data.member_code || 'LC-VIP';
       document.getElementById('card-expire').innerText = (data.expire_date || '').replace(/-/g, '.');
 
-      // 2. 시간 통계 및 프로그레스 바 계산
-      const total = Number(data.total_hours) || 0;
-      const used = Number(data.used_hours) || 0;
+      // 횟수 기반 렌더링
+      const total = parseInt(data.total_passes, 10) || 0;
+      const used = parseInt(data.used_passes, 10) || 0;
       const remain = Math.max(0, total - used);
 
-      document.getElementById('remain-hours').innerText = remain % 1 === 0 ? remain : remain.toFixed(1);
-      document.getElementById('used-hours').innerText = used % 1 === 0 ? used : used.toFixed(1);
-      document.getElementById('total-hours').innerText = total;
+      document.getElementById('remain-passes').innerText = remain;
+      document.getElementById('used-passes').innerText = used;
+      document.getElementById('total-passes').innerText = total;
 
       const fillPercent = total > 0 ? Math.min(100, Math.round((remain / total) * 100)) : 0;
       setTimeout(() => {
