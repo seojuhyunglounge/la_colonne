@@ -327,7 +327,7 @@
     .map-preview-wrap {
       position: relative;
       width: 100%;
-      height: 360px;
+      height: 380px;
       background: #14171d;
     }
 
@@ -449,7 +449,6 @@
         font-size: 1.2rem;
       }
 
-      /* 초협소 뷰포트(폴드 커버)에서 일반 링크 숨김 및 Members만 고정 노출 */
       .nav-menu {
         gap: 0;
       }
@@ -612,9 +611,10 @@
     <!-- Map & Actions Container -->
     <div class="map-container">
       <div class="map-preview-wrap">
+        <!-- 센텀스퀘어 정밀 좌표 (35.167132, 129.133454) 적용 -->
         <iframe 
           title="La Colonne Map"
-          src="https://maps.google.com/maps?q=35.169123,129.130635&z=17&output=embed" 
+          src="https://maps.google.com/maps?q=35.167132,129.133454+(%EC%84%BC%ED%85%80%EC%8A%A4%ED%81%90%EC%96%B4)&hl=ko&z=17&output=embed" 
           loading="lazy">
         </iframe>
       </div>
@@ -625,7 +625,7 @@
         </div>
         <div class="map-btn-group">
           <button type="button" class="btn-copy-address" onclick="copyAddress()">주소 복사</button>
-          <a href="https://map.naver.com/v5/search/%EB%B6%80%EC%82%B0%EA%B4%91%EC%97%AD%EC%8B%9C%20%ED%95%B4%EC%9A%B4%EB%8C%80%EA%B5%AC%20%EC%84%BC%ED%85%803%EB%A1%9C%2026" 
+          <a href="https://map.naver.com/v5/search/%EC%84%BC%ED%85%80%EC%8A%A4%ED%81%90%EC%96%B4" 
              target="_blank" 
              rel="noopener noreferrer" 
              class="btn-naver-map">
