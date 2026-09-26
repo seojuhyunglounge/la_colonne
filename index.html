@@ -16,6 +16,7 @@
       --bg-card: rgba(22, 26, 33, 0.7);
       --border-color: rgba(255, 255, 255, 0.08);
       --accent-gold: #c5a880;
+      --accent-gold-hover: #dfcfb2;
       --text-main: #f5f5f7;
       --text-muted: #9e9ea7;
     }
@@ -44,7 +45,7 @@
       height: 70px;
       display: flex;
       align-items: center;
-      background: rgba(15, 17, 21, 0.85);
+      background: rgba(15, 17, 21, 0.88);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border-color);
@@ -75,7 +76,7 @@
     .nav-menu {
       display: flex;
       align-items: center;
-      gap: 28px;
+      gap: 24px;
       list-style: none;
     }
 
@@ -91,15 +92,33 @@
       color: var(--text-main);
     }
 
-    /* Members Action Chip */
+    /* Action Chip Buttons (Reservation & Members) */
+    .btn-nav-reserve {
+      color: var(--text-main) !important;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 6px 14px;
+      border-radius: 999px;
+      font-size: 0.84rem !important;
+      font-weight: 500 !important;
+      background: rgba(255, 255, 255, 0.04);
+      white-space: nowrap;
+      transition: all 0.2s ease;
+    }
+
+    .btn-nav-reserve:hover {
+      border-color: var(--accent-gold);
+      color: var(--accent-gold) !important;
+      background: rgba(197, 168, 128, 0.08);
+    }
+
     .btn-members {
       color: var(--accent-gold) !important;
       border: 1px solid rgba(197, 168, 128, 0.4);
       padding: 6px 14px;
       border-radius: 999px;
-      font-size: 0.85rem !important;
+      font-size: 0.84rem !important;
       font-weight: 500 !important;
-      background: rgba(197, 168, 128, 0.05);
+      background: rgba(197, 168, 128, 0.08);
       white-space: nowrap;
       flex-shrink: 0;
       transition: all 0.2s ease;
@@ -110,7 +129,7 @@
       color: #0f1115 !important;
     }
 
-    /* Hero Section (센텀시티 스카이라인 앰비언트) */
+    /* Hero Section */
     .hero-section {
       position: relative;
       min-height: 100vh;
@@ -165,6 +184,13 @@
       text-shadow: 0 2px 10px rgba(0, 0, 0, 0.85);
     }
 
+    .hero-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+
     .btn-primary {
       display: inline-block;
       padding: 14px 32px;
@@ -184,6 +210,26 @@
       background: var(--accent-gold);
       color: var(--bg-dark);
       box-shadow: 0 0 20px rgba(197, 168, 128, 0.3);
+    }
+
+    .btn-hero-reserve {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--accent-gold);
+      border: 1px solid var(--accent-gold);
+      color: #0f1115;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      border-radius: 4px;
+      transition: all 0.3s ease;
+    }
+
+    .btn-hero-reserve:hover {
+      background: var(--accent-gold-hover);
+      box-shadow: 0 0 24px rgba(223, 207, 178, 0.4);
     }
 
     /* Section Common */
@@ -506,6 +552,91 @@
       line-height: 1;
     }
 
+    /* ─── Private Concierge Hub (손님용 핵심 링크 섹션) ─── */
+    .concierge-hub {
+      margin-top: 60px;
+      padding: 40px 30px;
+      background: linear-gradient(145deg, rgba(22, 26, 33, 0.9) 0%, rgba(15, 17, 21, 0.95) 100%);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+    }
+
+    .concierge-header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .concierge-header h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.8rem;
+      color: #ffffff;
+      font-weight: 400;
+      letter-spacing: 0.05em;
+      margin-bottom: 8px;
+    }
+
+    .concierge-header p {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+    }
+
+    .concierge-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .concierge-link-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      padding: 22px;
+      background: rgba(10, 11, 13, 0.6);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+      border-radius: 8px;
+      text-decoration: none;
+      transition: all 0.25s ease;
+    }
+
+    .concierge-link-card:hover {
+      border-color: rgba(197, 168, 128, 0.4);
+      transform: translateY(-3px);
+      background: rgba(197, 168, 128, 0.04);
+    }
+
+    .concierge-card-tag {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--accent-gold);
+      margin-bottom: 6px;
+      font-weight: 500;
+    }
+
+    .concierge-card-title {
+      font-size: 1.05rem;
+      font-weight: 500;
+      color: #ffffff;
+      margin-bottom: 8px;
+    }
+
+    .concierge-card-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .concierge-card-arrow {
+      margin-top: 14px;
+      font-size: 0.82rem;
+      color: var(--accent-gold);
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
     /* Footer */
     footer {
       border-top: 1px solid var(--border-color);
@@ -524,7 +655,7 @@
       }
     }
 
-    @media (max-width: 600px) {
+    @media (max-width: 680px) {
       header {
         height: 60px;
       }
@@ -537,18 +668,18 @@
         font-size: 1.2rem;
       }
 
-      /* 초협소 뷰포트(폴드 커버)에서 일반 링크 숨김 및 Members만 고정 노출 */
+      /* 초협소 뷰포트(폴드 커버)에서 일반 메뉴 숨기고 핵심 버튼 2개(Reserve, Members)만 나란히 배치 */
       .nav-menu {
-        gap: 0;
+        gap: 8px;
       }
 
-      .nav-menu li:not(:last-child) {
+      .nav-menu li:not(.nav-item-action) {
         display: none;
       }
 
-      .btn-members {
-        padding: 5px 11px;
-        font-size: 0.78rem !important;
+      .btn-nav-reserve, .btn-members {
+        padding: 5px 10px;
+        font-size: 0.76rem !important;
       }
 
       .atmosphere-wrap {
@@ -595,6 +726,10 @@
         padding: 10px 0;
         font-size: 0.82rem;
       }
+
+      .concierge-hub {
+        padding: 28px 18px;
+      }
     }
   </style>
 </head>
@@ -609,7 +744,15 @@
         <li><a href="#space">Privilege</a></li>
         <li><a href="#curation">Curation</a></li>
         <li><a href="#location">Location</a></li>
-        <li><a href="https://lounge-welcome-test.vercel.app/?view=member" class="btn-members">✦ Members</a></li>
+        <!-- Location과 Members 사이 Reservation 추가 -->
+        <li class="nav-item-action">
+          <a href="https://lounge-welcome-test.vercel.app/?view=booking" target="_blank" rel="noopener noreferrer" class="btn-nav-reserve">
+            Reservation
+          </a>
+        </li>
+        <li class="nav-item-action">
+          <a href="member.html" class="btn-members">✦ Members</a>
+        </li>
       </ul>
     </div>
   </header>
@@ -623,7 +766,12 @@
         센텀시티 스카이라인을 품은 오직 단 한 팀만을 위한 프라이빗 비즈니스 살롱.<br>
         타협 없는 안목과 격조 높은 의전으로 귀하의 결정적인 순간을 완성합니다.
       </p>
-      <a href="#location" class="btn-primary">Private Access</a>
+      <div class="hero-buttons">
+        <a href="https://lounge-welcome-test.vercel.app/?view=booking" target="_blank" rel="noopener noreferrer" class="btn-hero-reserve">
+          Reserve Session
+        </a>
+        <a href="#location" class="btn-primary">Private Access</a>
+      </div>
     </div>
   </section>
 
@@ -680,7 +828,7 @@
     </div>
   </section>
 
-  <!-- Curation / Art de la Table Section (신규 삽입) -->
+  <!-- Curation / Art de la Table Section -->
   <section id="curation">
     <div class="section-header">
       <span class="section-tag">Art de la Table & Details</span>
@@ -772,7 +920,6 @@
     <!-- Map & Actions Container -->
     <div class="map-container">
       <div class="map-preview-wrap">
-        <!-- 센텀스퀘어 정밀 좌표 (35.167132, 129.133454) 적용 -->
         <iframe 
           title="La Colonne Map"
           src="https://maps.google.com/maps?q=35.167132,129.133454+(%EC%84%BC%ED%85%80%EC%8A%A4%ED%80%98%EC%96%B4)&hl=ko&z=17&output=embed" 
@@ -793,6 +940,56 @@
             <span class="naver-n-icon">N</span> 네이버 지도
           </a>
         </div>
+      </div>
+    </div>
+
+    <!-- Private Concierge Hub (손님용 핵심 링크 4종) -->
+    <div class="concierge-hub">
+      <div class="concierge-header">
+        <span class="section-tag">Direct Concierge</span>
+        <h3>손님 전용 스마트 콘솔</h3>
+        <p>예약부터 세션 이용, 어메니티 셀프 체크아웃까지 실시간으로 진행하실 수 있습니다.</p>
+      </div>
+      <div class="concierge-grid">
+        <!-- 1. 예약 신청 -->
+        <a href="https://lounge-welcome-test.vercel.app/?view=booking" target="_blank" rel="noopener noreferrer" class="concierge-link-card">
+          <div>
+            <span class="concierge-card-tag">Reservation</span>
+            <div class="concierge-card-title">라운지 이용 예약 신청</div>
+            <div class="concierge-card-desc">원하시는 일자와 시간대를 선택하여 단독 대관 세션을 신청합니다.</div>
+          </div>
+          <div class="concierge-card-arrow">예약하기 →</div>
+        </a>
+
+        <!-- 2. 예약 조회 / 취소 -->
+        <a href="https://lounge-welcome-test.vercel.app/?view=my_booking" target="_blank" rel="noopener noreferrer" class="concierge-link-card">
+          <div>
+            <span class="concierge-card-tag">Booking Check</span>
+            <div class="concierge-card-title">내 예약 조회 및 취소</div>
+            <div class="concierge-card-desc">신청하신 세션 일정 확인 및 변경, 취소 요청을 관리합니다.</div>
+          </div>
+          <div class="concierge-card-arrow">내역 확인 →</div>
+        </a>
+
+        <!-- 3. 어메니티 & 미니바 셀프 정산 -->
+        <a href="https://lounge-welcome-test.vercel.app/?view=bar" target="_blank" rel="noopener noreferrer" class="concierge-link-card">
+          <div>
+            <span class="concierge-card-tag">Honesty Bar</span>
+            <div class="concierge-card-title">어메니티 & 미니바 정산</div>
+            <div class="concierge-card-desc">라운지 내 소비하신 주류, 스낵 및 어메니티를 셀프로 정산합니다.</div>
+          </div>
+          <div class="concierge-card-arrow">셀프 정산하기 →</div>
+        </a>
+
+        <!-- 4. VIP 멤버십 세션 패스 잔여 확인 -->
+        <a href="https://lounge-welcome-test.vercel.app/?view=member" target="_blank" rel="noopener noreferrer" class="concierge-link-card">
+          <div>
+            <span class="concierge-card-tag">VIP Pass</span>
+            <div class="concierge-card-title">멤버십 패스 잔여 확인</div>
+            <div class="concierge-card-desc">보유하신 세션 횟수와 멤버십 상태를 실시간으로 확인합니다.</div>
+          </div>
+          <div class="concierge-card-arrow">패스 조회 →</div>
+        </a>
       </div>
     </div>
   </section>
