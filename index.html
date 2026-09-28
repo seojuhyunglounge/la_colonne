@@ -17,7 +17,7 @@ header{position:fixed;top:0;left:0;right:0;z-index:10;height:70px;background:rgb
 .nav{height:100%;max-width:var(--max);margin:auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between}
 .logo{font-family:"Cormorant Garamond",Georgia,serif;font-size:1.35rem;letter-spacing:.14em}
 .nav a{font-family:"Inter",sans-serif;font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;color:#666159}
-.nav .reservation{padding:8px 14px;border:1px solid rgba(41,39,34,.28)}
+.nav .private-access{padding:8px 14px;border:1px solid rgba(41,39,34,.28)}
 .hero{height:100vh;min-height:680px;padding-top:70px;display:grid;grid-template-columns:39% 61%}
 .hero-copy{display:flex;flex-direction:column;justify-content:center;padding:40px 42px 55px max(28px,calc((100vw - var(--max))/2 + 28px))}
 .hero-kicker{font-family:"Inter",sans-serif;font-size:.63rem;letter-spacing:.15em;text-transform:uppercase;color:#756f66;margin-bottom:22px}
@@ -51,13 +51,13 @@ footer{background:var(--dark);border-top:1px solid rgba(247,244,237,.1);color:#8
 .footer-inner{max-width:var(--max);margin:auto;display:flex;justify-content:space-between;gap:20px;font-family:"Inter",sans-serif;font-size:.57rem;letter-spacing:.08em;text-transform:uppercase}
 .footer-logo{color:var(--paper);font-family:"Cormorant Garamond",Georgia,serif;font-size:1.05rem;letter-spacing:.13em}
 @media(max-width:900px){.hero{height:auto;min-height:0;grid-template-columns:1fr}.hero-copy{min-height:540px;padding:105px 25px 60px}.hero-image{height:58vh;min-height:420px}.time,.collection{grid-template-columns:1fr;gap:45px}.time-image,.collection-image{height:500px}.table{grid-template-columns:1fr}.table-image{height:500px}.access-inner{align-items:flex-start;flex-direction:column}}
-@media(max-width:600px){header{height:62px}.nav{padding:0 18px}.nav .reservation{padding:7px 10px}.hero{padding-top:62px}.hero-copy{min-height:500px;padding:90px 20px 55px}.hero h1{font-size:4.15rem}.hero-image{height:52vh}.section{padding:105px 20px}.time-image,.collection-image,.table-image{height:390px}.table-copy{padding:70px 20px}.access{padding:95px 20px}.footer-inner{flex-direction:column}}
+@media(max-width:600px){header{height:62px}.nav{padding:0 18px}.nav .private-access{padding:7px 10px}.hero{padding-top:62px}.hero-copy{min-height:500px;padding:90px 20px 55px}.hero h1{font-size:4.15rem}.hero-image{height:52vh}.section{padding:105px 20px}.time-image,.collection-image,.table-image{height:390px}.table-copy{padding:70px 20px}.access{padding:95px 20px}.footer-inner{flex-direction:column}}
 </style>
 </head>
 <body>
 <header><nav class="nav">
 <a class="logo" href="#">LA COLONNE</a>
-<a class="reservation" href="https://lounge-welcome-test.vercel.app/?view=booking" target="_blank" rel="noopener">Reservation</a>
+<a class="private-access" href="https://lounge-welcome-test.vercel.app/?view=booking" target="_blank" rel="noopener">Private Access</a>
 </nav></header>
 
 <main>
@@ -93,6 +93,13 @@ footer{background:var(--dark);border-top:1px solid rgba(247,244,237,.1);color:#8
 </div>
 </section>
 
+<section class="section host" id="host">
+<div class="host-copy">
+<div class="label">The host</div>
+<h2 class="display">취향은 설명하기보다<br>보여주는 것에 가깝습니다.</h2>
+</div>
+</section>
+
 <section class="section collection" id="collection">
 <div class="collection-copy">
 <div class="label">The collection</div>
@@ -110,7 +117,7 @@ footer{background:var(--dark);border-top:1px solid rgba(247,244,237,.1);color:#8
 <h2 class="display">좋은 시간을 위해.</h2>
 <p class="access-copy">La Colonne은 프라이빗 예약제로 운영됩니다.</p>
 </div>
-<a class="access-button" href="https://lounge-welcome-test.vercel.app/?view=booking" target="_blank" rel="noopener">Reservation</a>
+<a class="access-button" href="https://lounge-welcome-test.vercel.app/?view=booking" target="_blank" rel="noopener">Private Access</a>
 </div>
 </section>
 </main>
