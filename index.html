@@ -128,17 +128,19 @@
 
     /* Hero */
     .hero{
-      min-height:100vh;
-      padding-top:76px;
+      height:calc(100vh - 76px);
+      min-height:0;
+      margin-top:76px;
       display:grid;
       grid-template-columns:42% 58%;
       background:var(--paper);
+      overflow:hidden;
     }
     .hero-copy{
       display:flex;
       flex-direction:column;
       justify-content:center;
-      padding:70px 55px 80px max(30px,calc((100vw - var(--max))/2 + 30px));
+      padding:45px 48px 45px max(30px,calc((100vw - var(--max))/2 + 30px));
     }
     .kicker{
       font-family:"Inter",sans-serif;
@@ -150,7 +152,7 @@
     }
     .hero h1{
       font-family:"Cormorant Garamond",Georgia,serif;
-      font-size:clamp(4.4rem,7vw,7.3rem);
+      font-size:clamp(3.8rem,5.8vw,6.2rem);
       line-height:.78;
       font-weight:400;
       letter-spacing:-.035em;
@@ -163,7 +165,7 @@
     }
     .hero-tagline{
       font-family:"Cormorant Garamond",Georgia,serif;
-      font-size:clamp(1.45rem,2.15vw,2rem);
+      font-size:clamp(1.3rem,1.9vw,1.8rem);
       line-height:1.12;
       max-width:390px;
     }
@@ -177,7 +179,8 @@
     }
     .hero-actions{display:flex;gap:10px;margin-top:38px;flex-wrap:wrap}
     .hero-visual{
-      min-height:calc(100vh - 76px);
+      height:100%;
+      min-height:0;
       position:relative;
       overflow:hidden;
     }
@@ -384,10 +387,15 @@
       .logo{font-size:1.25rem}
       .navlinks{gap:7px}
       .navlinks .reserve{padding:7px 10px}
-      .hero{padding-top:64px}
-      .hero-copy{min-height:540px;padding:95px 21px 60px}
+      .hero{
+        height:auto;
+        min-height:0;
+        margin-top:64px;
+        overflow:visible;
+      }
+      .hero-copy{min-height:480px;padding:80px 21px 55px}
       .hero h1{font-size:4.2rem}
-      .hero-visual{min-height:55vh}
+      .hero-visual{height:55vh;min-height:360px}
       .time,.space{padding:105px 21px}
       .experience{gap:10px}
       .experience-item .photo{height:250px}
@@ -425,7 +433,7 @@
   -->
   <section class="hero">
     <div class="hero-copy">
-      <div class="kicker">Private Luxury Lounge · Busan · Centum</div>
+      <div class="kicker">Private Luxury Lounge · Centum City, Busan</div>
 
       <h1>La<br>Colonne</h1>
 
@@ -477,15 +485,15 @@
           <img src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=800&q=84" alt="Private gathering">
         </div>
         <h3>Meet</h3>
-        <p>만나다</p>
+        
       </article>
 
       <article class="experience-item">
         <div class="photo">
-          <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=800&q=84" alt="Beautiful table">
+          <img src="https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=800&q=84" alt="Beautiful table setting">
         </div>
-        <h3>Dine</h3>
-        <p>즐기다</p>
+        <h3>Gather</h3>
+        
       </article>
 
       <article class="experience-item">
@@ -493,7 +501,7 @@
           <img src="https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=800&q=84" alt="Creative workspace">
         </div>
         <h3>Create</h3>
-        <p>영감을 나누다</p>
+        
       </article>
 
       <article class="experience-item">
@@ -501,7 +509,7 @@
           <img src="https://images.unsplash.com/photo-1600607687920-4e2a09cf159d?auto=format&fit=crop&w=800&q=84" alt="Quiet refined room">
         </div>
         <h3>Unwind</h3>
-        <p>쉬어가다</p>
+        
       </article>
     </div>
   </section>
@@ -626,7 +634,7 @@
 <footer id="location">
   <div class="footer-inner">
     <div class="footer-logo">LA COLONNE</div>
-    <div>Private Luxury Lounge · Busan · Centum</div>
+    <div>Private Luxury Lounge · Centum City, Busan</div>
   </div>
 </footer>
 
